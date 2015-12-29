@@ -1,0 +1,24 @@
+(
+SynthDef.new(\loni,
+{var temp, sum=0, env, frq, base;
+	env=Env.perc;
+		base=MouseY.kr(120, 480).round(120);
+	frq=MouseX.kr(base, base*10).round(120);
+10.do{
+temp =SinOsc.ar(frq*{Rand(0.99, 1.01)}!2, 3pi*{Rand(0.99, 1.01)}!2);
+
+sum=sum+temp;
+		};
+
+		sum=sum*EnvGen.kr(env, doneAction:2)*0.04;
+Out.ar(0, sum)
+	}
+).play
+)
+
+
+(
+Pbind(\instrument, \loni,
+	\dur, 0.5,
+).play;
+)
